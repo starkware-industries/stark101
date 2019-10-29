@@ -13,7 +13,7 @@ Note that it was written assuming that the user has reviewed and understood the 
 3. `jupyter lab NotebookTutorial.ipynb`
 
 ## Math Background
-During the tutorial you’ll generate a STARK proof for the 1023th element of the FibonacciSq sequence over a finite field. In this section, we explain what this last sentence means.
+During the tutorial you’ll generate a STARK proof for the 1023rd element of the FibonacciSq sequence over a finite field. In this section, we explain what this last sentence means.
 ### Finite Fields
 In the tutorial we will work with a finite field of prime size. This means we take a prime number p, and then work with integers in the domain {0, 1, 2, …, p – 1}. The idea is that we can treat this set of integers in the same way we treat real numbers: we can add them (but we need to take the result modulo p, so that it will fall back in the set), subtract them, multiply them and divide them. You can even define polynomials such as f(x)=a+bx<sup>2</sup> where the coefficients a,b and the input x are all numbers in this finite set. Since the addition and multiplication are done modulo p, the output f(x) will also be in the finite set. One interesting thing to note about finite fields, which is different from real numbers, is that there is always an element, g, called the generator (in fact there is more than one), for which the sequence 1, g, g<sup>2</sup>, g<sup>3</sup>, g<sup>4</sup>, …, g<sup>p-2</sup> (whose length is p-1) covers all the numbers in the set but 0 (modulo p, of course). Such a geometric sequence is called a cyclic group. We will supply you with python classes that implement these things so you don’t have to be familiar with how these are implemented (though the algorithm for division in a finite field is not that trivial).
 ### FibonacciSq
@@ -24,7 +24,7 @@ For the tutorial we define a sequence that resembles the well known Fibonacci se
 All the elements of the sequence will be from the finite field (which means that both squaring and addition is computed modulo p).
 
 ### STARK Proof
-We will create a proof for the claim “The 1023th element of the FibonacciSq sequence is …”. By “proof” we don’t mean a mathematical proof with logical deductions. Instead, we mean some data which can convince whomever reads it that the claim is correct. To make it more formal we define two entities: Prover and Verifier. The Prover generates this data (the proof). The Verifier gets this data and checks for its validity. The requirement is that if the claim is false, the Prover will not be able to generate a valid proof (even if it deviates from the protocol).
+We will create a proof for the claim “The 1023rd element of the FibonacciSq sequence is …”. By “proof” we don’t mean a mathematical proof with logical deductions. Instead, we mean some data which can convince whomever reads it that the claim is correct. To make it more formal we define two entities: Prover and Verifier. The Prover generates this data (the proof). The Verifier gets this data and checks for its validity. The requirement is that if the claim is false, the Prover will not be able to generate a valid proof (even if it deviates from the protocol).
 STARK is a specific protocol which describes the structure of such proof and defines what the Prover and Verifier have to do.
 
 ### Some Other Things You Should Know
