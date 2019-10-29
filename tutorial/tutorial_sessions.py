@@ -50,7 +50,7 @@ def part2():
     cp = cp0 + cp1 + cp2
     cp_ev = [cp.eval(d) for d in domain]
     cp_mt = MerkleTree(cp_ev)
-    ch.send(mt.root)
+    ch.send(cp_mt.root)
     return cp, cp_ev, cp_mt, ch, domain
 
 # from part 3

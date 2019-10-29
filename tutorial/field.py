@@ -31,8 +31,7 @@ class FieldElement:
 
     def __repr__(self):
         # Choose the shorter representation between the positive and negative values of the element.
-        return repr(self.val)
-        # return repr((self.val + self.k_modulus//2) % self.k_modulus - self.k_modulus//2)
+        return repr((self.val + self.k_modulus//2) % self.k_modulus - self.k_modulus//2)
 
     def __eq__(self, other):
         if isinstance(other, int):
