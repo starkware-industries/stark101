@@ -1,3 +1,20 @@
+###############################################################################
+# Copyright 2019 StarkWare Industries Ltd.                                    #
+#                                                                             #
+# Licensed under the Apache License, Version 2.0 (the "License").             #
+# You may not use this file except in compliance with the License.            #
+# You may obtain a copy of the License at                                     #
+#                                                                             #
+# https://www.starkware.co/open-source-license/                               #
+#                                                                             #
+# Unless required by applicable law or agreed to in writing,                  #
+# software distributed under the License is distributed on an "AS IS" BASIS,  #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    #
+# See the License for the specific language governing permissions             #
+# and limitations under the License.                                          #
+###############################################################################
+
+
 from random import randint
 
 from field import FieldElement
@@ -63,7 +80,7 @@ def test_latex_repr():
     assert (X - 5 * X**2)._repr_latex_() == '$ x - 5x^{2} $'
     assert (-71 * X**5 + X**2048)._repr_latex_() == '$ -71x^{5} + x^{2048} $'
     assert (X**2 + X + 1)._repr_latex_() == '$ 1 + x + x^{2} $'
-    assert (92 * X**65  + 4 * X**15 - 31)._repr_latex_() == '$ -31 + 4x^{15} + 92x^{65} $'
+    assert (92 * X**65 + 4 * X**15 - 31)._repr_latex_() == '$ -31 + 4x^{15} + 92x^{65} $'
     assert (-X)._repr_latex_() == '$ -x $'
     assert (X-X)._repr_latex_() == '$0$'
 
