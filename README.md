@@ -4,6 +4,10 @@
 A tutorial for a basic STARK (Scalable Transparent Argument of Knowledge) protocol to prove the calculation of a Fibonacci-Square sequence, as designed for [StarkWare Sessions](https://starkware.co/starkware-sessions/), and authored by the [StarkWare](https://starkware.co) team.
 Note that it was written assuming that the user has reviewed and understood the presentations at the beginning of each part.
 
+### Video Lessons
+
+This tutorial has a **complimentary series of videos [available here](https://starkware.co/developers-community/stark101-onlinecourse/)** to review. Slides and links (to this repositories content) are also included.
+
 ## Run Online
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/starkware-industries/stark101/master?urlpath=lab%2Ftree%2Ftutorial%2FNotebookTutorial.ipynb)
 
