@@ -39,3 +39,9 @@ For example, if _f_ ( _x_ ) = _x_<sup>3</sup> + _x_ + 1 and _g_ ( _x_ ) = _x_<su
 
 ### Roots of Polynomials
 When a polynomial satisfies _f_ (_a_) = 0 for some specific value a (we say that a is a root of _f_ ), we don’t have remainder (_r_ ( _x_ ) = 0) when dividing it by (_x_ - _a_) so we can write _f_ ( _x_ ) = (_x_ - _a_) * _q_ ( _x_ ), and deg( _q_ )=deg( _f_ ) - 1. A similar fact is true for _k_ roots. Namely, if _a_<sub>_i_</sub> is a root of _f_ for all _i_ = 1, 2, …, _k_, then there exists a polynomial _q_ of degree deg(_f_) - _k_ for which _f_ ( _x_ ) = ( _x_ - _a_<sub>1</sub> )( _x_ - _a_<sub>2</sub> ) … ( _x_ - _a_<sub>_k_</sub> ) * _q_ ( _x_ ) .
+
+### Want to Know More?
+
+1. Nigel Smart’s [“Cryptography Made Simple”](https://www.cs.umd.edu/~waa/414-F11/IntroToCrypto.pdf) – Chapter 1.1: Modular Arithmetic.
+
+2. Arora and Barak’s [“Computational Complexity: A Modern Approach”](http://theory.cs.princeton.edu/complexity/book.pdf) – Appendix: Mathematical Background, sections A.4 (Finite fields and Groups) and A.6 (Polynomials).
