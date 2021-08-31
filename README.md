@@ -33,9 +33,9 @@ STARK is a specific protocol which describes the structure of such proof and def
 We recommend you take a look at our [STARK math blog posts](https://medium.com/starkware/tagged/stark-math) (Arithmetization [I](https://medium.com/starkware/arithmetization-i-15c046390862) & [II](https://medium.com/starkware/arithmetization-ii-403c3b3f4355) specifically). You don’t need to read them thoroughly before running through the tutorial, but it can give you better context on what things you can create proofs for, and what a STARK proof looks like. You should definitely give them a read after you have completed this tutorial in full.
 
 ### Division of Polynomials
-For every two polynomials _f_ ( _x_ ) and _g_ ( _x_ ), there exist two polynomials _q_ ( _x_ ) and _r_ ( _x_ ) called the quotient and remainder of the division _f_ ( _x_ ) by _g_ ( _x_ ). They satisfy _f_ ( _x_ ) = _g_ ( _x_ ) * _q_ ( _x_ ) + _r_ ( _x_ ) and the degree of _r_ ( _x_ ) is smaller than the degree of _g_ ( _x_ ).
+For every two polynomials _f_(_x_) and _g_(_x_), there exist two polynomials _q_ ( _x_ ) and _r_ ( _x_ ) called the quotient and remainder of the division _f_ ( _x_ ) by _g_ ( _x_ ). They satisfy _f_ ( _x_ ) = _g_ ( _x_ ) * _q_ ( _x_ ) + _r_ ( _x_ ) and the degree of _r_ ( _x_ ) is smaller than the degree of _g_ ( _x_ ).
 
-For example, if _f_ ( _x_ ) =_x_<sup>3</sup> + _x_ + 1 and _g_ ( _x_ ) = _x_<sup>2</sup> + 1 then _q_ ( _x_ ) = _x_ and _r_ ( _x_ ) = 1. Indeed, _x_<sup>3</sup> + _x_ + 1 = ( _x_<sup>2</sup> + 1 ) * _x_ + 1.
+For example, if _f_ ( _x_ ) = _x_<sup>3</sup> + _x_ + 1 and _g_ ( _x_ ) = _x_<sup>2</sup> + 1 then _q_ ( _x_ ) = _x_ and _r_ ( _x_ ) = 1. Indeed, _x_<sup>3</sup> + _x_ + 1 = ( _x_<sup>2</sup> + 1 ) * _x_ + 1.
 
 ### Roots of Polynomials
 When a polynomial satisfies _f_ ( _a_ ) = 0 for some specific value a (we say that a is a root of _f_), we don’t have remainder ( _r_ ( _x_ ) = 0 ) when dividing it by ( _x_ - _a_ ) so we can write _f_ ( _x_ ) = ( _x_ - _a_ ) * _q_ ( _x_ ), and deg( _q_ )=deg( _f_ ) - 1. A similar fact is true for _k_ roots. Namely, if _a_<sub>_i_</sub> is a root of _f_ for all _i_ = 1, 2, …, _k_, then there exists a polynomial _q_ of degree deg( _f_ ) - _k_ for which _f_ ( _x_ ) = ( _x_ - _a_<sub>1</sub> )( _x_ - _a_<sub>2</sub> ) … ( _x_ - _a_<sub>_k_</sub> ) * _q_ ( _x_ ) .
