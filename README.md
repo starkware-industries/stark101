@@ -28,7 +28,7 @@ We will create a proof for the claim “The 1023rd element of the FibonacciSq se
 STARK is a specific protocol which describes the structure of such proof and defines what the Prover and Verifier have to do.
 
 ### Some Other Things You Should Know
-We recommend you take a look at our math blog posts ([Arithmetization I](https://medium.com/starkware/arithmetization-i-15c046390862), [Arithmetization II](https://medium.com/starkware/arithmetization-ii-403c3b3f4355)). You don’t need to read them thoroughly before running through the tutorial, but it can give you better context on what things you can create proofs for, and what a STARK proof looks like. You should definitely give them a read after you have completed this tutorial in full.
+We recommend you take a look at our [math blog posts](https://medium.com/starkware/tagged/stark-math) (Arithmetization [I](https://medium.com/starkware/arithmetization-i-15c046390862) & [II](https://medium.com/starkware/arithmetization-ii-403c3b3f4355) specifically). You don’t need to read them thoroughly before running through the tutorial, but it can give you better context on what things you can create proofs for, and what a STARK proof looks like. You should definitely give them a read after you have completed this tutorial in full.
 
 ### Division of Polynomials
 For every two polynomials f(x) and g(x), there exist two polynomials q(x) and r(x) called the quotient and remainder of the division f(x) by g(x). They satisfy f(x) = g(x) * q(x) + r(x) and the degree of r(x) is smaller than the degree of g(x). For example, if f(x)=x<sup>3</sup>+x+1 and g(x)=x<sup>2</sup>+1 then q(x)=x and r(x)=1. Indeed, x<sup>3</sup>+x+1 = (x<sup>2</sup>+1)*x + 1.
