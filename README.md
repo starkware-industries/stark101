@@ -96,7 +96,7 @@ _q_ ( _x_ ) = _x_ and _r_ ( _x_ ) = 1. Indeed, _x_<sup>3</sup> + _x_ + 1 = ( _x_
 
 When a polynomial satisfies _f_ (_a_) = 0 for some specific value a (we say that a is a root of _f_
 ), we don’t have remainder (_r_ ( _x_ ) = 0) when dividing it by (_x_ - _a_) so we can write _f_ (
-_x_ ) = (_x_ - _a_) _ *q* ( *x* ), and deg( *q* )=deg( *f* ) - 1. A similar fact is true for *k*
+_x_ ) = (_x_ - _a_) _ *q* ( *x* ), and deg( *q* ) = deg( *f* ) - 1. A similar fact is true for *k*
 roots. Namely, if *a*<sub>*i*</sub> is a root of *f* for all *i* = 1, 2, …, *k*, then there exists a
 polynomial *q* of degree deg(*f*) - *k* for which *f* ( *x* ) = ( *x* - *a*<sub>1</sub> )( *x* -
 *a*<sub>2</sub> ) … ( *x* - *a*<sub>*k*</sub> ) _ _q_ ( _x_ ) .
