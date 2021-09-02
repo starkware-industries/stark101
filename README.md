@@ -12,9 +12,9 @@ beginning of each part.
 
 ### Video Lessons
 
-This tutorial has a **series of videos [available
-here](https://starkware.co/developers-community/stark101-onlinecourse/)** to review. Slides and
-links (to this repositories content) are also included.
+This tutorial has a series of videos
+[available here](https://starkware.co/developers-community/stark101-onlinecourse/)
+to review. Slides and links (to this repositories' content) are also included.
 
 ## Run Online
 
@@ -42,7 +42,7 @@ coefficients _a_,_b_ and the input _x_ are all numbers in this finite set. Since
 multiplication are done modulo _p_, the output _f _ ( _x_ ) will also be in the finite set. One
 interesting thing to note about finite fields, which is different from real numbers, is that there
 is always an element, _g_, called the generator (in fact there is more than one), for which the
-sequence 1, _g_, _g_<sup>2</sup>, _g_<sup>3</sup>, _g_<sup>4</sup>, …, _g_<sup>p-2</sup> (whose
+sequence 1, _g_, _g_<sup>2</sup>, _g_<sup>3</sup>, _g_<sup>4</sup>, ... , _g_<sup>p-2</sup> (whose
 length is _p_ - 1 ) covers all the numbers in the set but 0 (modulo _p_, of course). Such a
 geometric sequence is called a cyclic group. We will supply you with python classes that implement
 these things so you don’t have to be familiar with how these are implemented (though the algorithm
@@ -54,7 +54,7 @@ For the tutorial we define a sequence that resembles the well known Fibonacci se
 sequence any element is the sum of squares of the two previous elements. Thus the first elements
 are:
 
-1, 1, 2, 5, 29, 866, …
+1, 1, 2, 5, 29, 866, ...
 
 All the elements of the sequence will be from the finite field (which means that both squaring and
 addition is computed modulo p).
@@ -94,12 +94,12 @@ _q_ ( _x_ ) = _x_ and _r_ ( _x_ ) = 1. Indeed, _x_<sup>3</sup> + _x_ + 1 = ( _x_
 
 ### Roots of Polynomials
 
-When a polynomial satisfies _f_ (_a_) = 0 for some specific value a (we say that a is a root of _f_
+When a polynomial satisfies _f_ (_a_) = 0 for some specific value a (we say that _a_ is a root of _f_
 ), we don’t have remainder (_r_ ( _x_ ) = 0) when dividing it by (_x_ - _a_) so we can write _f_ (
-_x_ ) = (_x_ - _a_) _ *q* ( *x* ), and deg( *q* ) = deg( *f* ) - 1. A similar fact is true for *k*
-roots. Namely, if *a*<sub>*i*</sub> is a root of *f* for all *i* = 1, 2, …, *k*, then there exists a
-polynomial *q* of degree deg(*f*) - *k* for which *f* ( *x* ) = ( *x* - *a*<sub>1</sub> )( *x* -
-*a*<sub>2</sub> ) … ( *x* - *a*<sub>*k*</sub> ) _ _q_ ( _x_ ) .
+_x_ ) = (_x_ - _a_) \* _q_ ( _x_ ), and deg( _q_ ) = deg( _f_ ) - 1. A similar fact is true for _k_
+roots. Namely, if _a_<sub>_i_</sub> is a root of _f_ for all _i_ = 1, 2, …, _k_, then there exists a
+polynomial _q_ of degree deg(_f_) - _k_ for which _f_ ( _x_ ) = ( _x_ - _a_<sub>1</sub> )( _x_ -
+_a_<sub>2</sub> ) … ( _x_ - _a_<sub>_k_</sub> ) \* _q_ ( _x_ ) .
 
 ### Want to Know More?
 
