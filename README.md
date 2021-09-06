@@ -8,7 +8,7 @@ Sessions](https://starkware.co/starkware-sessions/), and authored by the
 [StarkWare](https://starkware.co) team.
 
 Note that it was written assuming that the user has reviewed and understood the presentations at the
-beginning of each part. 
+beginning of each part.
 
 ### Video Lessons
 
