@@ -3,8 +3,8 @@
 ## About
 
 A tutorial for a basic STARK (**S**calable **T**ransparent **AR**gument of **K**nowledge) protocol
-to prove the calculation of a Fibonacci-Square sequence, as designed for [StarkWare
-Sessions](https://starkware.co/starkware-sessions/), and authored by the
+to prove the calculation of a Fibonacci-Square sequence, as designed for StarkWare
+Sessions, and authored by the
 [StarkWare](https://starkware.co) team.
 
 Note that it was written assuming that the user has reviewed and understood the presentations at the
@@ -13,7 +13,7 @@ beginning of each part.
 ### Video Lessons
 
 This tutorial has a series of videos
-[available here](https://starkware.co/developers-community/stark101-onlinecourse/)
+[available here](https://starkware.co/stark-101/)
 to review. Slides and links (to this repositories' content) are also included.
 
 ## Run Online
