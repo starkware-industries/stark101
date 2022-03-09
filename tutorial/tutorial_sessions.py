@@ -53,7 +53,7 @@ def part2():
     final1 = composition * composition
     final2 = p * p
     numer2 = final0 - final1 - final2
-    coef = [FieldElement(1)] + [FieldElement(0)] * 1023 + [FieldElement(-1)]
+    coef = [FieldElement(-1)] + [FieldElement(0)] * 1023 + [FieldElement(1)]
     numerator_of_denom2 = Polynomial(coef)
     factor0 = Polynomial.gen_linear_term(points[1021])
     factor1 = Polynomial.gen_linear_term(points[1022])
