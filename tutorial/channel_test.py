@@ -26,10 +26,13 @@ from channel import Channel
 def test_reproducability():
     c = Channel()
     c.send("Yes")
-    r = c.receive_random_int(0, 2 ** 20)
+    r1 = c.receive_random_int(0, 2 ** 20)
+    print(r1)
     d = Channel()
     d.send("Yes")
-    assert r == d.receive_random_int(0, 2 ** 20)
+    r2 = d.receive_random_int(0, 2 ** 20)
+    print(r2)
+    assert r1==r2
 
 
 def test_uniformity():
@@ -43,3 +46,9 @@ def test_uniformity():
     normalized_stdv_channel = sqrt(sum((y-mean)**2 for y in dist.values())) / range_size
     normalized_stdv_random = sqrt(sum((y-mean)**2 for y in dist_rand.values())) / range_size
     assert abs(normalized_stdv_channel - normalized_stdv_random) < 4
+
+
+if __name__ == "__main__":
+    test_reproducability()
+    test_uniformity()
+

@@ -70,7 +70,7 @@ class Polynomial:
     """
     Represents a polynomial over FieldElement.
     """
-
+   # 类方法，返回[0,1](即0+x)
     @classmethod
     def X(cls):
         """
@@ -159,6 +159,7 @@ class Polynomial:
 
     __rmul__ = __mul__  # To support <int> * <Polynomial>.
 
+    # 实现f(g(x))
     def compose(self, other):
         """
         Composes this polynomial with `other`.
@@ -218,6 +219,7 @@ class Polynomial:
         """
         return Polynomial([FieldElement.zero()] * degree + [coefficient])
 
+    # 产生x-p这个多项式
     @staticmethod
     def gen_linear_term(point):
         """
