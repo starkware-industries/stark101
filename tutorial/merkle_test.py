@@ -41,3 +41,19 @@ def test_merkle_get_authentication_path():
         other_content = data[randint(0, data_length - 1)]
         assert not verify_decommitment(
             leaf_id, other_content, decommitment, m.root) or other_content == content
+
+
+def test_merkle_get_authentication_path1():
+    data = [i for i in range(8)]
+    tree = MerkleTree(data)
+    leaf_id = 0
+    decommitment = tree.get_authentication_path(leaf_id)
+    print(decommitment)
+
+def test_bin():
+  print(f'bin(10)=', bin(10)[3:])
+  print(f'bin(8)=', bin(8)[3:])
+  print(f'bin(8)=', bin(7)[3:])
+
+if __name__ == "__main__":
+   test_bin()

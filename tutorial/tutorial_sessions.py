@@ -53,7 +53,7 @@ def part2():
     final1 = composition * composition
     final2 = p * p
     numer2 = final0 - final1 - final2
-    coef = [FieldElement(1)] + [FieldElement(0)] * 1023 + [FieldElement(-1)]
+    coef = [FieldElement(-1)] + [FieldElement(0)] * 1023 + [FieldElement(1)] # 1- x^1024 = -(x^1024 -1)
     numerator_of_denom2 = Polynomial(coef)
     factor0 = Polynomial.gen_linear_term(points[1021])
     factor1 = Polynomial.gen_linear_term(points[1022])
@@ -61,9 +61,19 @@ def part2():
     denom_of_denom2 = factor0 * factor1 * factor2
     denom2, r_denom2 = numerator_of_denom2.qdiv(denom_of_denom2)
     q2, r2 = numer2.qdiv(denom2)
-    cp0 = q0.scalar_mul(ch.receive_random_field_element())
-    cp1 = q1.scalar_mul(ch.receive_random_field_element())
-    cp2 = q2.scalar_mul(ch.receive_random_field_element())
+    alpha0 = ch.receive_random_field_element()
+    alpha1 = ch.receive_random_field_element()
+    alpha2 = ch.receive_random_field_element()
+
+    cp0 = q0.scalar_mul(alpha0)
+    cp1 = q1.scalar_mul(alpha1)
+    cp2 = q2.scalar_mul(alpha2)
+
+    # print('alpha0 =', alpha0, 'alpha1 =', alpha1, 'alpha2 =', alpha2)
+    # print('sessions,p0 =', q0.poly)
+    # print('sessions,p1 =', q1.poly)
+    # print('sessions,p2 =', q2.poly)
+
     cp = cp0 + cp1 + cp2
     cp_ev = [cp.eval(d) for d in domain]
     cp_mt = MerkleTree(cp_ev)
@@ -71,7 +81,6 @@ def part2():
     return cp, cp_ev, cp_mt, ch, domain
 
 # from part 3
-
 
 def next_fri_domain(domain):
     return [x ** 2 for x in domain[:len(domain) // 2]]
@@ -94,6 +103,9 @@ def next_fri_layer(poly, dom, alpha):
 
 def part3():
     cp, cp_ev, cp_mt, ch, domain = part2()
+    s0 = ','.join([str(i) for i in cp.poly]).encode()
+    print(f's0={s0}')
+
     # FriCommit function
     fri_polys = [cp]
     fri_doms = [domain]
@@ -109,3 +121,8 @@ def part3():
         ch.send(merkles[-1].root)
     ch.send(str(fri_polys[-1].poly[0]))
     return fri_polys, fri_doms, fri_layers, merkles, ch
+
+if __name__ == "__main__":
+    _,_,_,_,ch = part3()
+    print(f'proof=', ch.proof)
+    # fixed_stark101()

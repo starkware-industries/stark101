@@ -20,19 +20,28 @@ from math import log2, ceil
 
 from field import FieldElement
 
+'''
+             [1]
+         /         \
+      [2]           [3]
+     /   \         /    \
+   [4]   [5]     [6]     [7]
+   / \   / \     / \     / \
+ [8][9][10][11][12][13][14][15]
 
+'''
 class MerkleTree(object):
     """
     A simple and naive implementation of an immutable Merkle tree.
     """
 
     def __init__(self, data):
-        assert isinstance(data, list)
+        assert isinstance(data, list) # data should be a list
         assert len(data) > 0, 'Cannot construct an empty Merkle Tree.'
-        num_leaves = 2 ** ceil(log2(len(data)))
-        self.data = data + [FieldElement(0)] * (num_leaves - len(data))
-        self.height = int(log2(num_leaves))
-        self.facts = {}
+        num_leaves = 2 ** ceil(log2(len(data))) # round up to the nearest power of 2
+        self.data = data + [FieldElement(0)] * (num_leaves - len(data)) # pad with zeroes
+        self.height = int(log2(num_leaves))  # height of the tree
+        self.facts = {} #empty dictionary to store the authentication paths of the nodes
         self.root = self.build_tree()
 
     def get_authentication_path(self, leaf_id):
@@ -58,7 +67,7 @@ class MerkleTree(object):
     def recursive_build_tree(self, node_id):
         if node_id >= len(self.data):
             # A leaf.
-            id_in_data = node_id - len(self.data)
+            id_in_data = node_id - len(self.data) # 叶子节点在data中的索引
             leaf_data = str(self.data[id_in_data])
             h = sha256(leaf_data.encode()).hexdigest()
             self.facts[h] = leaf_data
@@ -83,3 +92,5 @@ def verify_decommitment(leaf_id, leaf_data, decommitment, root):
             h = auth + cur
         cur = sha256(h.encode()).hexdigest()
     return cur == root
+
+
