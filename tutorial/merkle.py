@@ -20,7 +20,16 @@ from math import log2, ceil
 
 from field import FieldElement
 
+'''
+             [1]
+         /         \
+      [2]           [3]
+     /   \         /    \
+   [4]   [5]     [6]     [7]
+   / \   / \     / \     / \
+ [8][9][10][11][12][13][14][15]
 
+'''
 class MerkleTree(object):
     """
     A simple and naive implementation of an immutable Merkle tree.
@@ -83,3 +92,5 @@ def verify_decommitment(leaf_id, leaf_data, decommitment, root):
             h = auth + cur
         cur = sha256(h.encode()).hexdigest()
     return cur == root
+
+

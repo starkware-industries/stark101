@@ -57,12 +57,11 @@ class Channel(object):
         # Note that when the range is close to 2^256 this does not emit a uniform distribution,
         # even if sha256 is uniformly distributed.
         # It is, however, close enough for this tutorial's purposes.
-        num = 0
-        while num == 0: #avoid num = 0 happens
-          num = min + (int(self.state, 16) % (max - min + 1))
-          self.state = sha256((self.state).encode()).hexdigest()
-          if show_in_proof:
-              self.proof.append(f'{inspect.stack()[0][3]}:{num}')
+
+        num = min + (int(self.state, 16) % (max - min + 1))
+        self.state = sha256((self.state).encode()).hexdigest()
+        if show_in_proof:
+            self.proof.append(f'{inspect.stack()[0][3]}:{num}')
         return num
 
     def receive_random_field_element(self):
@@ -71,3 +70,10 @@ class Channel(object):
         """
         num = self.receive_random_int(0, FieldElement.k_modulus - 1, show_in_proof=False)
         return FieldElement(num)
+
+    def derive_alphas(self, n):
+      alphas = []
+      for i in range(n):
+        alpha = self.receive_random_field_element()
+        alphas.append(alpha)
+      return alphas

@@ -225,7 +225,7 @@ class Polynomial:
         """
         Generates the polynomial (x-p) for a given point p.
         """
-        return Polynomial([FieldElement.zero() - point, FieldElement.one()])
+        return Polynomial([FieldElement.zero() - point, FieldElement.one()])  # x- p
 
     def degree(self):
         """
