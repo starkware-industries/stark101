@@ -49,11 +49,3 @@ def test_merkle_get_authentication_path1():
     leaf_id = 0
     decommitment = tree.get_authentication_path(leaf_id)
     print(decommitment)
-
-def test_bin():
-  print(f'bin(10)=', bin(10)[3:])
-  print(f'bin(8)=', bin(8)[3:])
-  print(f'bin(8)=', bin(7)[3:])
-
-if __name__ == "__main__":
-   test_bin()
