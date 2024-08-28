@@ -55,7 +55,7 @@ def build_polynomial(xs, ys):
 # build the larger evaluation domain x_coordinates
 def build_lde_domain():
   n = 8192
-  H = build_domain(8192)
+  H = build_domain(n)
   lde_domain = [H[i] * FieldElement.generator() for i in range(n)]
 
   assert len(set(lde_domain)) == len(lde_domain)
@@ -128,10 +128,6 @@ def constraint_2(f,G):
 
 
 def build_compostion_polynomial(p0, p1, p2, alpha0, alpha1, alpha2):
-  # print('alpha0 =', alpha0, 'alpha1 =', alpha1, 'alpha2 =', alpha2)
-  # print('build_compostion_polynomial, p0 =', p0.poly)
-  # print('build_compostion_polynomial, p1 =', p1.poly)
-  # print('build_compostion_polynomial,p2 =', p2.poly)
   cp = p0 * alpha0 + p1 * alpha1 + p2 * alpha2
   return cp
 
@@ -166,6 +162,12 @@ def fri_commit(cp, lde_domain, cp_eval, cp_merkle, channel):
   channel.send(str(fri_polys[-1].poly[0]))
   return fri_polys, fri_domains, fri_layers, fri_merkles
 
+'''
+
+  Importtant
+  1. in stark101, sibling is only for check cpi(x), cpi(-x), cp{i+1}(x^2) relationships calculation, not for merkle tree building as shown in https://zk-learning.org/assets/lecture8.pdf page38, where sibling is also for merkle tree building, but they are different implementations, both are correct.
+  2. channel.send should be used carefully, since it will change channel's state, so comparing to its original implemenation, channel.send() is deleted here.
+ '''
 def decommit_on_fri_layers(fri_layers, fri_merkles, idx, channel):
   cp_proof = []
   for layer, merkle in zip(fri_layers[:-1], fri_merkles[:-1]):
@@ -184,28 +186,18 @@ def decommit_on_fri_layers(fri_layers, fri_merkles, idx, channel):
 def decommit_on_query(trace_domain, lde_domain,lde_value, tree, fri_layers, fri_merkles, idx, channel):
   assert idx + 16 < len(lde_value), f'query index: {idx} is out of range. Length of layer: {len(lde_value)}.'
 
-  # channel.send(str(lde_value[idx]))  # f(x).
-  # channel.send(str(tree.get_authentication_path(idx)))  # auth path for f(x).
   x_proof = DecommitmentData(idx, lde_value[idx], tree.get_authentication_path(idx), tree.root)
 
   next_idx = idx + 8
-  # channel.send(str(lde_value[next_idx]))  # f(gx).
-  # channel.send(str(tree.get_authentication_path(next_idx)))  # auth path for f(gx).
   gx_proof = DecommitmentData(next_idx, lde_value[next_idx], tree.get_authentication_path(next_idx), tree.root)
 
   next_next_idx = idx + 16
-  # channel.send(str(lde_value[next_next_idx]))  # f(g^2x).
-  # channel.send(str(tree.get_authentication_path(next_next_idx)))  # auth path for f(g^2x).
   g2x_proof = DecommitmentData(next_next_idx, lde_value[next_next_idx], tree.get_authentication_path(next_next_idx), tree.root)
 
   cp_proof, final_value = decommit_on_fri_layers(fri_layers, fri_merkles, idx, channel)
   proof = Proof(x_proof, gx_proof, g2x_proof, cp_proof, final_value, trace_domain, lde_domain)
   return proof
 
-def decommit_fri(channel):
-  for query in range(3):
-    # Get a random index from the verifier and send the corresponding decommitment.
-    decommit_on_query(channel.receive_random_int(0, 8191 - 16), channel)
 
 def test_next_fri_layer():
   test_poly = Polynomial([FieldElement(2), FieldElement(3), FieldElement(0), FieldElement(1)])
