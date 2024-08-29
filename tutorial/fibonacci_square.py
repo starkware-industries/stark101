@@ -180,7 +180,7 @@ def decommit_on_fri_layers(fri_layers, fri_merkles, idx, channel):
     proof = DecommitmentData(sib_idx, layer[sib_idx], merkle.get_authentication_path(sib_idx), merkle.root)
     cp_proof.append(proof)
 
-  return cp_proof, fri_layers[-1][0]
+  return cp_proof, fri_layers[-1]
 
 
 def decommit_on_query(trace_domain, lde_domain,lde_value, tree, fri_layers, fri_merkles, idx, channel):
@@ -194,8 +194,8 @@ def decommit_on_query(trace_domain, lde_domain,lde_value, tree, fri_layers, fri_
   next_next_idx = idx + 16
   g2x_proof = DecommitmentData(next_next_idx, lde_value[next_next_idx], tree.get_authentication_path(next_next_idx), tree.root)
 
-  cp_proof, final_value = decommit_on_fri_layers(fri_layers, fri_merkles, idx, channel)
-  proof = Proof(x_proof, gx_proof, g2x_proof, cp_proof, final_value, trace_domain, lde_domain)
+  cp_proof, final_values = decommit_on_fri_layers(fri_layers, fri_merkles, idx, channel)
+  proof = Proof(x_proof, gx_proof, g2x_proof, cp_proof, final_values, trace_domain, lde_domain)
   return proof
 
 
@@ -243,15 +243,15 @@ if __name__ == "__main__":
   proof_1 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers, fri_merkles, 1, channel)
   proof_100 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers, fri_merkles,100, channel)
 
-  valid = proof_1.verify(proof_1.final_value)
+  valid = proof_1.verify(proof_1.final_values[0])
   assert valid == True
-  valid = proof_100.verify(proof_1.final_value)
+  valid = proof_100.verify(proof_1.final_values[0])
   assert valid == True
 
   for i in range(10):
     idx = randint(0, 8192 - 16)
     proof = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers, fri_merkles,idx, channel)
-    valid = proof.verify(proof_1.final_value)
+    valid = proof.verify(proof_1.final_values[0])
     assert valid == True
 
   print('success verify proofs')
