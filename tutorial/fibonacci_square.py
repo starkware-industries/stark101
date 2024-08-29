@@ -151,6 +151,7 @@ def fri_commit(cp, lde_domain, cp_eval, cp_merkle, channel):
   fri_domains = [lde_domain]
   fri_layers = [cp_eval]
   fri_merkles = [cp_merkle]
+  i = 0
   while fri_polys[-1].degree() > 0:
     beta = channel.receive_random_field_element()
     next_poly, next_domain, next_eval = next_fri_layer(fri_polys[-1], fri_domains[-1], beta)
@@ -159,7 +160,10 @@ def fri_commit(cp, lde_domain, cp_eval, cp_merkle, channel):
     fri_layers.append(next_eval)
     fri_merkles.append(commit(next_eval))
     channel.send(fri_merkles[-1].root)  # record each layer's merkle root
+    i += 1
+
   channel.send(str(fri_polys[-1].poly[0]))
+  print(f'fold {i} times:')
   return fri_polys, fri_domains, fri_layers, fri_merkles
 
 '''
@@ -209,8 +213,7 @@ def test_next_fri_layer():
   assert next_l == [FieldElement(86)]
   print('success verify next_fri_layer!')
 
-
-if __name__ == "__main__":
+def stark101_test():
   trace_value = build_trace_eval()  # [y0,y1,y2,...,y1022]
   trace_domain = build_trace_domain()  # [g^0,g^1,g^2,...,g^1023]
 
@@ -237,11 +240,14 @@ if __name__ == "__main__":
   print('success commit cp evaluation!')
 
   channel.send(cp_tree.root)
-  fri_polys, fri_domains, fri_layers, fri_merkles = fri_commit(cp, lde_domain, cp_eval, cp_tree,                                                    channel)
+  fri_polys, fri_domains, fri_layers, fri_merkles = fri_commit(cp, lde_domain, cp_eval, cp_tree,
+                                                               channel)
   print('success commit all proofs!')
 
-  proof_1 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers, fri_merkles, 1, channel)
-  proof_100 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers, fri_merkles,100, channel)
+  proof_1 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers,
+                              fri_merkles, 1, channel)
+  proof_100 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers,
+                                fri_merkles, 100, channel)
 
   valid = proof_1.verify(proof_1.final_values[0])
   assert valid == True
@@ -250,11 +256,15 @@ if __name__ == "__main__":
 
   for i in range(10):
     idx = randint(0, 8192 - 16)
-    proof = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers, fri_merkles,idx, channel)
+    proof = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers,
+                              fri_merkles, idx, channel)
     valid = proof.verify(proof_1.final_values[0])
     assert valid == True
 
+  print(f'final values:', proof_1.final_values)
   print('success verify proofs')
 
+if __name__ == "__main__":
+  stark101_test()
 
 
