@@ -18,16 +18,16 @@ class Proof:
   gx_proof : DecommitmentData
   g2x_proof : DecommitmentData
   cp_proof : list[DecommitmentData]
-  final_value: FieldElement
+  final_values: list[FieldElement]
   trace_domain: list[FieldElement]
   lde_domain: list[FieldElement]
 
-  def __init__(self, x_proof: DecommitmentData, gx_proof: DecommitmentData, g2x_proof: DecommitmentData, cp_proof: list[DecommitmentData], final_value: FieldElement, trace_domain: list[FieldElement], lde_domain: list[FieldElement]):
+  def __init__(self, x_proof: DecommitmentData, gx_proof: DecommitmentData, g2x_proof: DecommitmentData, cp_proof: list[DecommitmentData], final_values: list[FieldElement], trace_domain: list[FieldElement], lde_domain: list[FieldElement]):
     self.x_proof = x_proof
     self.gx_proof = gx_proof
     self.g2x_proof = g2x_proof
     self.cp_proof = cp_proof if cp_proof is not None else []
-    self.final_value = final_value
+    self.final_values = final_values
     self.trace_domain = trace_domain
     self.lde_domain = lde_domain
 
@@ -44,9 +44,11 @@ class Proof:
     for proof in self.cp_proof:
       merkle_proof_valid.append(verify_decommitment(proof.index, proof.value, proof.authentication_path, proof.merkle_root))
 
-    # check same LDE root and final evaluation
+    # check same LDE root and same final values
     same_lde_root = self.x_proof.merkle_root == self.gx_proof.merkle_root == self.g2x_proof.merkle_root
-    same_final_value = self.final_value == final_value
+    same_final_values = []
+    for i in range (len(self.final_values)):
+      same_final_values.append(final_value == self.final_values[i])
 
     channel = Channel()
     channel.send(self.x_proof.merkle_root)
@@ -71,7 +73,7 @@ class Proof:
       if i < len(self.cp_proof)//2-1:
         next_cp_value = self.cp_proof[(i+1)*2].value
       else:
-        next_cp_value = self.final_value
+        next_cp_value = self.final_values[0]
 
       channel.send(self.cp_proof[i*2].merkle_root)
       beta = channel.receive_random_field_element()
@@ -100,6 +102,6 @@ class Proof:
 
       domain = next_fri_domain(domain)
 
-    valid = all(merkle_proof_valid) & same_lde_root & same_final_value & all(cp_layers_valid) &all(same_sibling_merkle_root)&all(same_sibling_square)
+    valid = all(merkle_proof_valid) & same_lde_root & all(same_final_values) & all(cp_layers_valid) &all(same_sibling_merkle_root)&all(same_sibling_square)
     return valid
 
