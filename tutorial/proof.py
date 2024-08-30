@@ -64,7 +64,7 @@ class Proof:
 
     calculated_cp_val = p0_val * alphas[0] + p1_val * alphas[1] + p2_val * alphas[2]
     trace_cp_valid = calculated_cp_val == self.cp_proof[0].value
-    assert trace_cp_valid
+
 
     # check cpi(x), cpi(-x), cp{i+1}(x^2) relationships
     domain = self.lde_domain
@@ -102,6 +102,6 @@ class Proof:
 
       domain = next_fri_domain(domain)
 
-    valid = all(merkle_proof_valid) & same_lde_root & all(same_final_values) & all(cp_layers_valid) &all(same_sibling_merkle_root)&all(same_sibling_square)
+    valid = all(merkle_proof_valid) & same_lde_root & all(same_final_values) & trace_cp_valid & all(cp_layers_valid) &all(same_sibling_merkle_root)&all(same_sibling_square)
     return valid
 
