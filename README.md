@@ -38,6 +38,8 @@ run the following commands to check
 ```
 python3 fibonacci_square.py 
 python3 fibonacci_square_claimed_degree_less_than_512.py
+python3 fibonacci_square_change_1_trace_value.py
+python3 fibonacci_square_change_1_lde_value.py
 ```
 
 
