@@ -32,14 +32,17 @@ class Proof:
     self.lde_domain = lde_domain
 
 
-  def verify(self, final_value: FieldElement):
+  def verify(self, final_value: FieldElement,lde_tree, fri_merkles):
     # check merkle proofs
     merkle_proof_valid = []
-    merkle_proof_valid.append(verify_decommitment(self.x_proof.index, self.x_proof.value, self.x_proof.authentication_path, self.x_proof.merkle_root))
-    merkle_proof_valid.append(verify_decommitment(self.gx_proof.index, self.gx_proof.value, self.gx_proof.authentication_path, self.gx_proof.merkle_root))
-    merkle_proof_valid.append(verify_decommitment(self.g2x_proof.index, self.g2x_proof.value, self.g2x_proof.authentication_path, self.g2x_proof.merkle_root))
-    for proof in self.cp_proof:
-      merkle_proof_valid.append(verify_decommitment(proof.index, proof.value, proof.authentication_path, proof.merkle_root))
+    merkle_proof_valid.append(verify_decommitment(self.x_proof.index, self.x_proof.value, self.x_proof.authentication_path, self.x_proof.merkle_root) & (self.x_proof.merkle_root == lde_tree.root))
+    merkle_proof_valid.append(verify_decommitment(self.gx_proof.index, self.gx_proof.value, self.gx_proof.authentication_path, self.gx_proof.merkle_root) & (self.gx_proof.merkle_root == lde_tree.root))
+    merkle_proof_valid.append(verify_decommitment(self.g2x_proof.index, self.g2x_proof.value, self.g2x_proof.authentication_path, self.g2x_proof.merkle_root) & (self.g2x_proof.merkle_root == lde_tree.root))
+    for i in range(len(self.cp_proof) // 2):
+      proof = self.cp_proof[i*2]
+      merkle_proof_valid.append(verify_decommitment(proof.index, proof.value, proof.authentication_path, proof.merkle_root) & (proof.merkle_root == fri_merkles[i].root))
+      proof = self.cp_proof[i*2+1]
+      merkle_proof_valid.append(verify_decommitment(proof.index, proof.value, proof.authentication_path, proof.merkle_root) & (proof.merkle_root == fri_merkles[i].root))
 
     # check same LDE root and same cp root for each layer
     same_lde_root = self.x_proof.merkle_root == self.gx_proof.merkle_root == self.g2x_proof.merkle_root

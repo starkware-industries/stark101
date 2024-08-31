@@ -249,16 +249,16 @@ def stark101_test():
   proof_100 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers,
                                 fri_merkles, 100, channel)
 
-  valid = proof_1.verify(proof_1.final_values[0])
+  valid = proof_1.verify(proof_1.final_values[0], lde_tree, fri_merkles)
   assert valid == True
-  valid = proof_100.verify(proof_1.final_values[0])
+  valid = proof_100.verify(proof_1.final_values[0], lde_tree, fri_merkles)
   assert valid == True
 
   for i in range(10):
     idx = randint(0, 8192 - 16)
     proof = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers,
                               fri_merkles, idx, channel)
-    valid = proof.verify(proof_1.final_values[0])
+    valid = proof.verify(proof_1.final_values[0], lde_tree, fri_merkles)
     assert valid == True
 
   print(f'final values:', proof_1.final_values)
