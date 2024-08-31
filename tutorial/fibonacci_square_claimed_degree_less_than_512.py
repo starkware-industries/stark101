@@ -21,10 +21,10 @@ def fri_commit_fake(cp, lde_domain, cp_eval, cp_merkle, channel, n):
   return fri_polys, fri_domains, fri_layers, fri_merkles
 
   '''
-  在 stark101_claimed_degree_less_than_512()中, 将一个实际degree为1022的多项式f(x), 宣称为degree(f) <512的多项式,
+  在 stark101_claimed_degree_less_than_512()中, 将一个实际degree为1022的多项式f(x), 宣称为degree(f)=511 <512的多项式,
   对于degree< 512 需要折叠 ceil(log2(degree(f)))  = 9 次, 将最后一层变成常数，
   prover 折叠9次，提供proof。
-  verifier 验证proof，看最后一层是否 为常数，如果是，说明f(x)的degree<512。
+  verifier 验证proof，检查最后一层是否 为常数，如果是，说明f(x)的degree<512。
   fake_fri_commit() 用于生成模拟生成9层 cp layer。
   '''
 def stark101_claimed_degree_less_than_512():
