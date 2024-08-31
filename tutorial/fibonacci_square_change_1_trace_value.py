@@ -61,7 +61,7 @@ def stark101_change_1_trace_value():
   for i in range(8192-16):
    proof = decommit_on_query(trace_domain, lde_domain, fake_lde_value, fake_lde_tree, fri_layers,
                               fri_merkles, i, channel)
-   valid = proof.verify(proof_0.final_values[0])
+   valid = proof.verify(proof_0.final_values[0], lde_tree, fri_merkles)
    if valid == True:
     nb_pass += 1
    else:

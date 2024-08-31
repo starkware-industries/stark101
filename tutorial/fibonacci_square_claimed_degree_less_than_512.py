@@ -26,12 +26,13 @@ def fri_commit_fake(cp, lde_domain, cp_eval, cp_merkle, channel, n):
   prover 折叠9次，提供proof。
   verifier 验证proof，检查最后一层是否 为常数，如果是，说明f(x)的degree<512。
   fake_fri_commit() 用于生成模拟生成9层 cp layer。
+
   '''
 def stark101_claimed_degree_less_than_512():
   trace_value = build_trace_eval()  # [y0,y1,y2,...,y1022]
   trace_domain = build_trace_domain()  # [g^0,g^1,g^2,...,g^1023]
 
-  f = build_polynomial(trace_domain[:-1], trace_value)
+  f = build_polynomial(trace_domain[:-1], trace_value)  #1023
   lde_domain = build_lde_domain()
   lde_value = build_lde_value(f, lde_domain)
   lde_tree = commit(lde_value)
@@ -60,7 +61,7 @@ def stark101_claimed_degree_less_than_512():
 
   proof_1 = decommit_on_query(trace_domain, lde_domain, lde_value, lde_tree, fri_layers,
                               fri_merkles, 1, channel)
-  valid = proof_1.verify(proof_1.final_values[0])
+  valid = proof_1.verify(proof_1.final_values[0], lde_tree, fri_merkles)
   assert valid == False
   print(f'final values:', proof_1.final_values)
 
