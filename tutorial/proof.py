@@ -31,9 +31,6 @@ class Proof:
     self.trace_domain = trace_domain
     self.lde_domain = lde_domain
 
-  def add_to_cp(self, data: DecommitmentData):
-    """Append a DecommitmentData object to the CP list."""
-    self.CP.append(data)
 
   def verify(self, final_value: FieldElement):
     # check merkle proofs
@@ -44,8 +41,13 @@ class Proof:
     for proof in self.cp_proof:
       merkle_proof_valid.append(verify_decommitment(proof.index, proof.value, proof.authentication_path, proof.merkle_root))
 
-    # check same LDE root and same final values
+    # check same LDE root and same cp root for each layer
     same_lde_root = self.x_proof.merkle_root == self.gx_proof.merkle_root == self.g2x_proof.merkle_root
+    same_cp_root = []
+    for i in range(len(self.cp_proof) // 2):
+      same_cp_root.append(self.cp_proof[i*2].merkle_root == self.cp_proof[i*2+1].merkle_root)
+
+    # same final values
     same_final_values = []
     for i in range (len(self.final_values)):
       same_final_values.append(final_value == self.final_values[i])
@@ -55,7 +57,7 @@ class Proof:
     alphas = channel.derive_alphas(3)
 
     # check cp0(x), f(x), f(g*x), f(g^2*x) relationship
-    x_val = self.lde_domain[self.x_proof.index]
+    x_val = self.lde_domain[self.x_proof.index]  # x = lde_domain[index]
     p0_val = (self.x_proof.value - 1)/(x_val - 1)   # p0 = (f(x) - 1)/(x-g^0)
     p1_val = (self.x_proof.value - 2338775057)/(x_val - self.trace_domain[1022]) # p1 = (f(x) - 2338775057 )/(x-g^1022)
 
@@ -65,20 +67,18 @@ class Proof:
     calculated_cp_val = p0_val * alphas[0] + p1_val * alphas[1] + p2_val * alphas[2]
     trace_cp_valid = calculated_cp_val == self.cp_proof[0].value
 
-
-    # check cpi(x), cpi(-x), cp{i+1}(x^2) relationships
+    # check cpi(x), cpi(-x), cp{i+1}(x^2) relationship
     domain = self.lde_domain
     cp_layers_valid = []
     for i in range(len(self.cp_proof)//2):
       if i < len(self.cp_proof)//2-1:
-        next_cp_value = self.cp_proof[(i+1)*2].value
+        next_cp_value = self.cp_proof[(i+1)*2].value  #
       else:
         next_cp_value = self.final_values[0]
 
       channel.send(self.cp_proof[i*2].merkle_root)
       beta = channel.receive_random_field_element()
       idx = self.cp_proof[i*2].index
-      sibling_idx = self.cp_proof[i*2+1].index
       x_val = domain[idx]
       g_x_square_val = (self.cp_proof[i*2].value + self.cp_proof[i*2+1].value)/2
       h_x_square_val = (self.cp_proof[i*2].value - self.cp_proof[i*2+1].value)/(2*x_val)
@@ -88,20 +88,18 @@ class Proof:
       # update domain and next_cp_value
       domain = next_fri_domain(domain)
 
-
-    # check sibling cp has same merkle root, lde_domain[idx]^2 == lde_domain[sibling_idx]^2
-    same_sibling_merkle_root = []
+    # check sibling cp has same merkle root and lde_domain[idx]^2 == lde_domain[sibling_idx]^2
     same_sibling_square = []
     domain = self.lde_domain
 
     for i in range(len(self.cp_proof)//2):
       idx = self.cp_proof[i*2].index
       sibling_idx = self.cp_proof[i*2+1].index
-      same_sibling_merkle_root.append( self.cp_proof[i*2].merkle_root == self.cp_proof[i*2+1].merkle_root)
       same_sibling_square.append(domain[idx] ** 2 == domain[sibling_idx] ** 2)
 
       domain = next_fri_domain(domain)
 
-    valid = all(merkle_proof_valid) & same_lde_root & all(same_final_values) & trace_cp_valid & all(cp_layers_valid) &all(same_sibling_merkle_root)&all(same_sibling_square)
+    valid = (all(merkle_proof_valid) & same_lde_root & all(same_cp_root) & all(same_final_values) &
+             trace_cp_valid & all(cp_layers_valid) & all(same_sibling_square))
     return valid
 
