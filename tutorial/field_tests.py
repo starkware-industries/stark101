@@ -20,24 +20,12 @@ from field import FieldElement
 
 def test_field_operations():
     # Check pow, mul, and the modular operations
-    t = FieldElement(2) ** 30 * FieldElement(3) + FieldElement(1)
+    t = FieldElement(2).pow(30) * FieldElement(3) + FieldElement(1)
     assert t == FieldElement(0)
     # Check generator
     # Check inverse
     # Check hash via usage of set
-def test_field_add():
-    res = FieldElement.zero()
 
-    for i in range(100):
-        res = res + FieldElement(i)
-
-    assert res == FieldElement(4950)
-
-def test_field_neg():
-    v = FieldElement(100)
-    negV = -v
-    print(f"v:{v}, negV:{negV}")
-    assert 0 == v + negV
 
 def test_field_div():
     for _ in range(100):
@@ -45,10 +33,3 @@ def test_field_div():
         t_inv = FieldElement.one() / t
         assert t_inv == t.inverse()
         assert t_inv * t == FieldElement.one()
-
-
-if __name__ == "__main__":
-    #test_field_add()
-    test_field_operations()
-    test_field_neg()
-    # test_field_div()

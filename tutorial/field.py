@@ -27,7 +27,7 @@ class FieldElement:
     Represents an element of F_(3 * 2**30 + 1).
     """
     k_modulus = 3 * 2**30 + 1
-    generator_val = 5  #generator value
+    generator_val = 5
 
     def __init__(self, val):
         self.val = val % FieldElement.k_modulus
@@ -51,9 +51,9 @@ class FieldElement:
         return repr((self.val + self.k_modulus//2) % self.k_modulus - self.k_modulus//2)
 
     def __eq__(self, other):
-        if isinstance(other, int):   #如果other是int类型，则转化为FieldElement类型,然后再进行比较
+        if isinstance(other, int):
             other = FieldElement(other)
-        return isinstance(other, FieldElement) and self.val == other.val  #比较两个FieldElement的val是否相等
+        return isinstance(other, FieldElement) and self.val == other.val
 
     def __hash__(self):
         return hash(self.val)
@@ -63,7 +63,7 @@ class FieldElement:
         return FieldElement(FieldElement.generator_val)
 
     @staticmethod
-    def typecast(other): #将other转化为FieldElement类型
+    def typecast(other):
         if isinstance(other, int):
             return FieldElement(other)
         assert isinstance(other, FieldElement), f'Type mismatch: FieldElement and {type(other)}.'

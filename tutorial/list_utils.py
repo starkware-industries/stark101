@@ -18,11 +18,10 @@
 from itertools import dropwhile, starmap, zip_longest
 
 
-# 从列表 list_of_elements 中移除指定元素 element_to_remove 的尾随部分（即列表末尾连续出现的那些指定元素）。
 def remove_trailing_elements(list_of_elements, element_to_remove):
     return list(dropwhile(lambda x: x == element_to_remove, list_of_elements[::-1]))[::-1]
 
-# 可用于两个多项式的乘法，除法操作
+
 def two_lists_tuple_operation(f, g, operation, fill_value):
     return list(starmap(operation, zip_longest(f, g, fillvalue=fill_value)))
 

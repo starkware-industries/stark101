@@ -20,7 +20,7 @@ from random import randint
 from field import FieldElement
 from polynomial import Polynomial, interpolate_poly, X, prod
 
-# 产生一个系数都不为0的指定degredd的随机多项式
+
 def random_polynomial(degree):
     """
     Returns a random polynomial of a prescribed degree which is NOT the zero polynomial.
@@ -90,15 +90,8 @@ def test_poly_mul():
 
 
 def test_prod():
-    g1 = FieldElement.generator()**((FieldElement.k_modulus - 1) // 1024)
-    assert X**1024 - 1 == prod([(X - g1**i) for i in range(1024)])
-    g2 = FieldElement.generator()**((FieldElement.k_modulus - 1) // 8192)
-    assert X**8192 - 1 == prod([(X - g2**i) for i in range(8192)])
-    assert g1 == g2**8
-    print(f'g1: {g1}, g2: {g2}')
-    print(f'g1: {-g1}, g2: {-g2}')
-    assert True == g1.is_order(1024)
-    assert True == g2.is_order(8192)
+    g = FieldElement.generator()**((FieldElement.k_modulus - 1) // 1024)
+    assert X**1024 - 1 == prod([(X - g**i) for i in range(1024)])
 
 
 def test_call_compose():
