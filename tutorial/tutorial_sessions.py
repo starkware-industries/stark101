@@ -53,7 +53,7 @@ def part2():
     final1 = composition * composition
     final2 = p * p
     numer2 = final0 - final1 - final2
-    coef = [FieldElement(-1)] + [FieldElement(0)] * 1023 + [FieldElement(1)] # 1- x^1024 = -(x^1024 -1)
+    coef = [FieldElement(-1)] + [FieldElement(0)] * 1023 + [FieldElement(1)]
     numerator_of_denom2 = Polynomial(coef)
     factor0 = Polynomial.gen_linear_term(points[1021])
     factor1 = Polynomial.gen_linear_term(points[1022])
@@ -103,8 +103,6 @@ def next_fri_layer(poly, dom, alpha):
 
 def part3():
     cp, cp_ev, cp_mt, ch, domain = part2()
-    s0 = ','.join([str(i) for i in cp.poly]).encode()
-    print(f's0={s0}')
 
     # FriCommit function
     fri_polys = [cp]
