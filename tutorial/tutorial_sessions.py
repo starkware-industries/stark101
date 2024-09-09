@@ -72,6 +72,7 @@ def part2():
 
 # from part 3
 
+
 def next_fri_domain(domain):
     return [x ** 2 for x in domain[:len(domain) // 2]]
 
@@ -93,7 +94,6 @@ def next_fri_layer(poly, dom, alpha):
 
 def part3():
     cp, cp_ev, cp_mt, ch, domain = part2()
-
     # FriCommit function
     fri_polys = [cp]
     fri_doms = [domain]

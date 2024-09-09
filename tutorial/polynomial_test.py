@@ -112,4 +112,3 @@ def test_truediv():
 def test_mod():
     p = X**9 - 5*X + 4
     assert p % (X**2 + 1) == -4*X + 4
-
